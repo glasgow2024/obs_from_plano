@@ -1,0 +1,6 @@
+web/*
+
+*.json
+*.tar.gz
+
+settings.php
