@@ -82,6 +82,24 @@ class Program
     }
 
     /**
+     * Function to strip out HTML tags and replace quote characters with curley quotes.
+     *
+     * @param string $text The raw text to strip.
+     *
+     * @return string
+     */
+
+    public function stripHtml(
+        string|null $text
+    ): string {
+        if (is_null($text)) {
+            return '';
+        }
+        $text = strip_tags(str_replace('&#39;', '’', $text));
+        return $text;
+    }
+
+    /**
      * Function to write all future items in a room to a JSON file.
      *
      * @param string   $fileName The file name to save to.
@@ -118,12 +136,12 @@ class Program
                 'time' => $dateTime->format('H:i'),
                 'mins' => $programItem->mins,
                 'loc' => [$roomName],
-                'desc' => $programItem->desc,
+                'desc' => $this->stripHtml($programItem->desc),
                 'people' => $itemPeople,
                 'links' => $programItem->links ?? [],
                 ];
             }
         }
-        file_put_contents($fileName, json_encode($items));
+        file_put_contents($fileName, json_encode($items, JSON_UNESCAPED_UNICODE));
     }
 }
