@@ -34,6 +34,7 @@ $index = <<<EOD
 EOD;
 
 foreach ($program->getLocations() as $fileName => $roomName) {
+    $fileName = str_replace('/', '_', $fileName);
     $program->writeObsRoomFile(PATH . "$fileName" . EXT, $roomName, $timeNow);
     $index .= '<li><a href="' . $fileName . EXT . '">' . $roomName . '</a></li>';
 }
